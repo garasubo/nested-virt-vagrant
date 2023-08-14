@@ -13,6 +13,13 @@ Vagrant.configure("2") do |config|
       libvirt.cpus = 2
       libvirt.memory = 8000
     end
+    
+    # enable network bridge
+    # Ref: https://developer.hashicorp.com/vagrant/docs/networking/public_network
+    l1.vm.network "public_network"
+    
+    # provisoning
+    # Run `vagrant provision` to apply the changes
     l0.vm.provision "shell", path: "./init.sh"
   end
 
