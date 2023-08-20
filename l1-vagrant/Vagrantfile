@@ -3,6 +3,7 @@ require 'getoptlong'
 opts = GetoptLong.new(
   ['--l1-cpus', GetoptLong::OPTIONAL_ARGUMENT],
   ['--l1-memory', GetoptLong::OPTIONAL_ARGUMENT],
+  ['--network-interface', GetoptLong::OPTIONAL_ARGUMENT],
   ['--l1-cpu-model', GetoptLong::OPTIONAL_ARGUMENT]
 )
 
@@ -12,6 +13,7 @@ puts "Original ARGV: #{ARGV}"
 cpus = 4
 memory = 16000
 cpu_model = "host-model"
+network_interface = "eth0"
 
 opts.each do |opt, arg|
   case opt
@@ -21,8 +23,12 @@ opts.each do |opt, arg|
     memory = arg.to_i
   when '--l1-cpu-model'
     cpu_model = arg
+  when '--network-interface'
+    network_interface = arg
   end
 end
+
+puts "arg parse done"
 
 Vagrant.configure("2") do |config|
   config.vagrant.plugins = "vagrant-libvirt"
@@ -40,7 +46,7 @@ Vagrant.configure("2") do |config|
 
     # enable network bridge
     # Ref: https://developer.hashicorp.com/vagrant/docs/networking/public_network
-    l1.vm.network "public_network", bridge: "enp7s0", dev: "enp7s0"
+    l1.vm.network "public_network", bridge: network_interface, dev: network_interface
 
     # provisoning
     # Run `vagrant provision` to apply the changes

@@ -11,9 +11,9 @@ Vagrant及びVagrant Libvirt Providerをinstallする必要があります
 ## 実行方法
 1. このレポジトリをクローンする
 1. クローンしたプロジェクトの`l1-vagrant`に移動
-1. `vagrant up`でL1 Linuxの仮想環境を用意する。このとき、`l2-vagrant`の内容もコピーされ、L1 Linux内にL0 Linuxも立ち上がる
+1. `vagrant up`でL1 Linuxの仮想環境を用意する。このとき、`l2-vagrant`の内容もコピーされ、L1 Linux内にL2 Linuxも立ち上がる
 1. `vagrant ssh`でL1 Linuxにログインする
-1. L1 Linux内の`~/l2-linux`に移動して`vagrant ssh`することでL0 Linuxにログインする
+1. L1 Linux内の`~/l2-linux`に移動して`vagrant ssh`することでL2 Linuxにログインする
 
 ## Provisioning
 `l1-vagrant`及び`l2-vagrant`内の`init.sh`ファイルが仮想マシン作成時に実行される。`init-user.sh`は`init.sh`が実行後、マシンを再起動させてからユーザー権限で実行される。
