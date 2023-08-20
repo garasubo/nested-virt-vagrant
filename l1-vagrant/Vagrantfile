@@ -46,6 +46,6 @@ Vagrant.configure("2") do |config|
     # Run `vagrant provision` to apply the changes
     l1.vm.provision "file", source: "../l2-vagrant", destination: "/home/vagrant/l2-vagrant"
     l1.vm.provision "shell", path: "./init.sh", reboot: true
-    # l1.vm.provision "shell", path: "./init-user.sh", privileged: false
+    l1.vm.provision "shell", path: "./init-user.sh", privileged: false
   end
 end

@@ -5,18 +5,21 @@ Vagrant.configure("2") do |config|
   config.vagrant.plugins = "vagrant-libvirt"
   config.vm.box = "generic/ubuntu2204"
 
-  config.vm.define "l2-linux" do |l0|
+  config.vm.define "l2-linux" do |l2|
     l2.vm.hostname = "l2-linux"
     l2.vm.provider "libvirt" do |libvirt|
       libvirt.driver = "kvm"
       libvirt.nested = "true"
       libvirt.cpus = 2
       libvirt.memory = 8000
+      # avoid network segment conflict with default network
+      libvirt.management_network_name = 'vagrant-net0'
+      libvirt.management_network_address = '192.168.124.0/24'
     end
     
     # enable network bridge
     # Ref: https://developer.hashicorp.com/vagrant/docs/networking/public_network
-    l2.vm.network "public_network"
+    l2.vm.network "public_network", bridge: "eth0", dev: "eth0"
     
     # provisoning
     # Run `vagrant provision` to apply the changes
